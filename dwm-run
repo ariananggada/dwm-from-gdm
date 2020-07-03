@@ -20,16 +20,13 @@ test $(which gpg-agent) && eval $(gpg-agent --daemon)
 # Add this when you include flatpak in your system
 dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY
 
-mpd &			# music player daemon-you might prefer it as a service though
-remaps &		# run the remaps script, switching caps/esc and more; check it for more info
-setbg &			# set the background with the `setbg` script
-xcompmgr &		# xcompmgr for transparency
-# picom &   # using picom instead of xcompmgr
-# $STATUSBAR &		# script for updating the status bar
+setxkbmap -option caps:escape		        # run the remaps script, switching caps/esc and more; check it for more info
+mpd &			                        # music player daemon-you might prefer it as a service though
+feh --bg-center ~/.local/share/wall.jpg &	# set the background with the `setbg` script
+xcompmgr &	                	        # xcompmgr for transparency
 dunst &			# dunst for notifications
 xset r rate 300 50 &	# Speed xrate up
-unclutter &		# Remove mouse when idle
-redshift -c ~/.config/redshift/config &
+redshift -c $HOME/.config/redshift/config &
 
 # source machine- and uname-specific xinitrcs
 xinitcfg="$HOME/.config/xinit"
@@ -45,8 +42,8 @@ while :; do
 # exit X when dwmstatus (or failsafe xterm) is killed
 if [ $(which slstatus) ]; then
     slstatus
-elif [ $(which dwmstatus) ]; then
-    dwmstatus
+elif [ $(which dwmblocks) ]; then
+    dwmblocks
 elif [ $(which st) ]; then
     st
 elif [ $(which urxvt) ]; then
