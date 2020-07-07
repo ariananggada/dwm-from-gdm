@@ -15,6 +15,7 @@ test -f "$usermodmap"    && xmodmap     "$usermodmap"
 
 # start some nice programs
 test $(which gpg-agent) && eval $(gpg-agent --daemon)
+test $(which ssh-agent) && eval $(ssh-agent)
 
 # Fix Gnome Apps Slow  Start due to failing services
 # Add this when you include flatpak in your system
@@ -38,27 +39,12 @@ xinitcfg="$HOME/.config/xinit"
 test -f "$xinitcfg/u/$(uname)"       && . "$xinitcfg/u/$(uname)"
 test -f "$xinitcfg/host/$(hostname)" && . "$xinitcfg/host/$(hostname)"
 
-# /usr/local/bin/dwm 2>>.dwm_log &
-
-while :; do
-		ssh-agent dwm || break
-		done
+/usr/local/bin/dwm 2>>.dwm_log &
 
 # exit X when dwmblocks (or failsafe xterm) is killed
-if [ $(which slstatus) ]; then
-    slstatus
-elif [ $(which dwmblocks) ]; then
+if [ $(which dwmblocks) ]; then
     dwmblocks
 elif [ $(which st) ]; then
     st
-elif [ $(which urxvt) ]; then
-    urxvt
-elif [ $(which uxterm) ]; then
-    uxterm -ls -T Failsafe -geometry 80x24-0-0
-elif [ $(which rxvt) ]; then
-    rxvt
 elif [ $(which xterm) ]; then
     xterm -ls -T Failsafe -geometry 80x24-0-0
-elif [ $(which gnome-terminal) ]; then
-    gnome-terminal
-fi
