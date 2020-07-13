@@ -24,13 +24,13 @@ dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XA
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 export SSH_AUTH_SOCK
 
+xset r rate 300 50 &                      # Speed xrate up
 setxkbmap -option caps:escape             # run the remaps script, switching caps/esc and more; check it for more info
 mpd &                                     # music player daemon-you might prefer it as a service though
 feh --bg-center ~/.local/share/wall.jpg & # set the background with the `setbg` script
 xcompmgr &                                # xcompmgr for transparency
 dunst &                                   # dunst for notifications
-xset r rate 300 50 &                      # Speed xrate up
-redshift -c $HOME/.config/redshift/config &
+redshift -c $HOME/.config/redshift/redshift.conf &
 dwmblocks &
 
 # third-party apps
@@ -43,9 +43,7 @@ xinitcfg="$HOME/.config/xinit"
 test -f "$xinitcfg/u/$(uname)"       && . "$xinitcfg/u/$(uname)"
 test -f "$xinitcfg/host/$(hostname)" && . "$xinitcfg/host/$(hostname)"
 
-while :; do
-  ssh-agent dwm 2>>/tmp/dwm_log || break
-  done
+ssh-agent dwm 2>>/tmp/dwm_log || break
 
 # exit X when dwmblocks (or failsafe xterm) is killed
 if [ $(which dwmblocks) ]; then
