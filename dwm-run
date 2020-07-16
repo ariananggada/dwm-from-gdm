@@ -35,7 +35,7 @@ dwmblocks &
 
 
 # third-party apps
-if [ $(which udisk2) ]; then
+if [ $(which udisksctl) ]; then
   if [ $(which udiskie) ]; then
     udiskie -ANt &
   fi
