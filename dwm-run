@@ -33,6 +33,14 @@ dunst &                                   # dunst for notifications
 redshift -c $HOME/.config/redshift/redshift.conf &
 dwmblocks &
 
+
+# third-party apps
+if [ $(which udisk2) ]; then
+  if [ $(which udiskie) ]; then
+    udiskie -ANt &
+  fi
+fi
+
 # third-party apps
 if [ $(which dropbox) ]; then
   dropbox &                               # dropbox, cloud storage
